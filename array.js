@@ -1,6 +1,6 @@
 var memory = require('./memory');
 
-var Array = () => {
+var Array = function() {
 	this.length = 0;
 	this._capacity = 0;
 	this.ptr = memory.allocate(this.length);
@@ -8,6 +8,7 @@ var Array = () => {
 Array.SIZE_RATIO = 3;
 
 Array.prototype._resize = (size) => {
+	console.log("array._resize");
 	let oldPtr = this.ptr;
 	this.ptr = memory.allocate(size);
 	if (this.ptr === null) {
@@ -27,6 +28,7 @@ Array.prototype.push = (value) => {
 };
 
 Array.prototype.get = (index) => {
+	console.log("array.get");
 	if (index < 0 || index >= this.length) {
 		throw new Error('Index error');
 		}
@@ -34,6 +36,7 @@ Array.prototype.get = (index) => {
 };
 
 Array.prototype.pop = () => {
+	console.log("array.pop");
 	if (this.length == 0) {
 		throw new Error('Index error');
 	}
@@ -43,6 +46,7 @@ Array.prototype.pop = () => {
 }
 
 Array.prototype.insert = (index, value) => {
+	console.log("array.insert");
 	if (index < 0 || index >= this.length) {
 		throw new Error('Index error');
 	}
@@ -55,9 +59,19 @@ Array.prototype.insert = (index, value) => {
 };
 
 Array.prototype.remove = (index) => {
+	console.log("array.remove");
 	if (index < 0 || index >= this.length) {
 		throw new Error('Index error');
 	}
 	memory.copy(this.ptr + index, this.ptr + index + 1, this.length - index - 1);
 	this.length--;
 }
+
+
+let newArray = new Array;
+console.log(newArray);
+newArray.push(1);
+newArray.push(2);
+newArray.push(3);
+newArray.push(4);
+console.log(newArray);
