@@ -71,24 +71,39 @@ Array.prototype.remove = function(index) {
     memory.copy(this.ptr + index, this.ptr + index + 1, this.length - index - 1);
     this.length--;
 };
+
+Array.prototype.shift = function() {
+	console.log("array.shift");
+	var value = memory.get(0)
+	memory.copy(this.ptr, this.ptr + 1, this.length - 1);
+	this.length--;
+	return value;
+}
+
+
+
 console.log("starting new action");
 let newArray = new Array; //[]
 console.log("starting new action");
 newArray.push(1); //[1]
 console.log("starting new action");
 newArray.push(2); //[2]
-console.log("starting new action");
-newArray.get(0); //1
-console.log("starting new action");
-newArray.pop(); //[1]
-console.log("starting new action");
-newArray.push(6); //[1, 6]
-console.log("starting new action");
-newArray.insert(1, 3); //[1, 3, 6]
-console.log("starting new action");
-newArray.remove(2); //[1,3]
-console.log("starting new action");
-newArray.push(4); //[1, 3, 4]
-console.log("starting new action");
-newArray.push(5); //[1, 3, 4, 5]
-console.log(newArray);
+// console.log("starting new action");
+// newArray.get(0); //1
+// console.log("starting new action");
+// newArray.pop(); //[1]
+// console.log("starting new action");
+// newArray.push(6); //[1, 6]
+// console.log("starting new action");
+// newArray.insert(1, 3); //[1, 3, 6]
+// console.log("starting new action");
+// newArray.remove(2); //[1,3]
+// console.log("starting new action");
+// newArray.push(4); //[1, 3, 4]
+// console.log("starting new action");
+// newArray.push(5); //[1, 3, 4, 5]
+// console.log("starting new action");
+// newArray.insert(1, 3); //[1, 3, 6]
+// console.log(newArray);
+console.log(newArray.shift());
+console.log(newArray.get(0));
