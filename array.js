@@ -1,6 +1,6 @@
 var memory = require('./memory');
 
-const Array = () => {
+var Array = () => {
 	this.length = 0;
 	this._capacity = 0;
 	this.ptr = memory.allocate(this.length);
@@ -27,7 +27,7 @@ Array.prototype.push = (value) => {
 };
 
 Array.prototype.get = (index) => {
-	if (index < - || index >= this.length) {
+	if (index < 0 || index >= this.length) {
 		throw new Error('Index error');
 		}
 		return memory.get(this.ptr + index);
@@ -42,7 +42,7 @@ Array.prototype.pop = () => {
 	return value;
 }
 
-Array.prototype.insert = (index, value) {
+Array.prototype.insert = (index, value) => {
 	if (index < 0 || index >= this.length) {
 		throw new Error('Index error');
 	}
@@ -53,3 +53,11 @@ Array.prototype.insert = (index, value) {
 	memory.set(this.ptr + index, value);
 	this.length++;
 };
+
+Array.prototype.remove = (index) => {
+	if (index < 0 || index >= this.length) {
+		throw new Error('Index error');
+	}
+	memory.copy(this.ptr + index, this.ptr + index + 1, this.length - index - 1);
+	this.length--;
+}
