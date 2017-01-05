@@ -2,8 +2,10 @@ var memory = require('./memory');
 
 const Array = () => {
 	this.length = 0;
+	this._capacity = 0;
 	this.ptr = memory.allocate(this.length);
 }
+Array.SIZE_RATIO = 3;
 
 Array.prototype._resize = (size) => {
 	let oldPtr = this.ptr;
@@ -13,6 +15,41 @@ Array.prototype._resize = (size) => {
 	}
 	memory.copy(this.ptr, oldPtr, this.length);
 	memory.free(oldPtr);
+	this._capacity = size;
 }
 
- 
+Array.prototype.push = (value) => {
+	if (this.length >= this._capacity) {
+		this._resize((this.length + 1) * Array.SIZE_RATIO);
+		}
+		memory.set(this.ptr + this.length, value);
+		this.length++;
+};
+
+Array.prototype.get = (index) => {
+	if (index < - || index >= this.length) {
+		throw new Error('Index error');
+		}
+		return memory.get(this.ptr + index);
+};
+
+Array.prototype.pop = () => {
+	if (this.length == 0) {
+		throw new Error('Index error');
+	}
+	let value = memory.get(this.ptr + this.length - 1);
+	this.length--;
+	return value;
+}
+
+Array.prototype.insert = (index, value) {
+	if (index < 0 || index >= this.length) {
+		throw new Error('Index error');
+	}
+	if (this.length >= this._capacity) {
+		this._resize((this.length + 1) * Array.SIZE_RATIO);
+	}
+	memory.copy(this.ptr + index + 1, this.ptr + index, this.length - index);
+	memory.set(this.ptr + index, value);
+	this.length++;
+};
