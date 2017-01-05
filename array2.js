@@ -5,6 +5,7 @@ var Array = function() {
     this._capacity = 0;
     this.ptr = memory.allocate(this.length);
 };
+
 Array.SIZE_RATIO = 3;
 
 Array.prototype.push = function(value) {
@@ -80,7 +81,12 @@ Array.prototype.shift = function() {
 	return value;
 }
 
-
+Array.prototype.unshift = function(value) {
+  console.log("array.unshift");
+  memory.copy(this.ptr + 1, this.ptr, this.length);
+  memory.set(this.ptr, value);
+  this.length++;
+}
 
 console.log("starting new action");
 let newArray = new Array; //[]
@@ -105,5 +111,7 @@ newArray.push(2); //[2]
 // console.log("starting new action");
 // newArray.insert(1, 3); //[1, 3, 6]
 // console.log(newArray);
-console.log(newArray.shift());
+// console.log(newArray.shift());
+// console.log(newArray.get(0));
+newArray.unshift(5);
 console.log(newArray.get(0));
